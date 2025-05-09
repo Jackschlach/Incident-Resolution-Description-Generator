@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Incident Resolution Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="overlay">
+        <div class="container">
+            <h1>Incident Resolution Description Generator</h1>
+            <form method="post">
+                <textarea name="user_input" placeholder="Describe the issue..." required></textarea>
+                <div class="tone-selector">
+                    <label style="color: white;">Select Tone:</label><br>
+                    <button type="button" onclick="setTone('professional')">Professional</button>
+                    <button type="button" onclick="setTone('casual')">Casual</button>
+                    <button type="button" onclick="setTone('neutral')">Neutral</button>
+                    <input type="hidden" id="tone" name="tone" value="professional">
+                </div>
+                <br>
+                <button type="submit">Generate Description</button>
+            </form>
+            {% if resolution %}
+            <div class="result">
+                <h2>Generated Resolution:</h2>
+                <p>{{ resolution }}</p>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+    <script>
+        function setTone(tone) {
+            document.getElementById("tone").value = tone;
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
