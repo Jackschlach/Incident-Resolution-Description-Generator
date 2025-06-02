@@ -2,8 +2,8 @@ import os
 from flask import Flask, render_template, request
 from openai import OpenAI
 
-# Initialize OpenAI client with your API key
-openai_client = OpenAI(api_key=os.getenv("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"))
+# Initialize OpenAI client with your API key. Cannot share individual API key
+openai_client = OpenAI(api_key=os.getenv())
 
 # Initialize the Flask app
 
