@@ -16,7 +16,7 @@ Tech used:
 
 - Python 3.13  
 - OpenAI (GPT-3.5-turbo)  
-- Flask (for local testing)  
-- HTML/CSS (simple UI)  
+- Flask 
+- HTML/CSS  
 - AWS Lambda (for deployment)(coming soon)
 
