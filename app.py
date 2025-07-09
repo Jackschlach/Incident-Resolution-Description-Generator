@@ -1,9 +1,13 @@
 import os
 from flask import Flask, render_template, request
 from openai import OpenAI
+from dotenv import load_dotenv
 
-# Initialize OpenAI client with your API key. Cannot share individual API key
-openai_client = OpenAI(api_key=os.getenv())
+# Load environment variables from .env file
+load_dotenv()
+
+# Initialize OpenAI client with your API key from environment variable
+openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # Initialize the Flask app
 
@@ -30,15 +34,18 @@ def process_input(user_input, tone):
         prompt += " Use a clear, straight to the point tone. Limit the amount of words and follow this format exactly: Due to an issue with (root cause), users experienced (issue). This was resolved by (team) doing (resolution)."
 
     try:
-        # Use the new Responses API to generate the completion
-        response = openai_client.responses.create(
-            model="gpt-3.5-turbo",  # GPT-3.5-turbo model
-            instructions="Transform the incident details into a resolution description.",
-            input=prompt
+        # Use the Chat Completions API to generate the response
+        response = openai_client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "Transform the incident details into a resolution description."},
+                {"role": "user", "content": prompt}
+            ]
         )
 
         # Extract and return the output text
-        return response.output_text.strip()
+        content = response.choices[0].message.content
+        return content.strip() if content else "No response generated"
 
     except Exception as e:
         return f"Error generating response: {e}"
